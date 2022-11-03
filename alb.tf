@@ -3,13 +3,9 @@ resource "aws_lb" "alb" {
   internal           = var.INTERNAL
   load_balancer_type = "application"
   security_groups    = var.INTERNAL ? [aws_security_group.alb_private.id] : [aws_security_group.alb_public.id]  # Conditional expression
-  subnets            = [for subnet in aws_subnet.public : subnet.id]
-
-  enable_deletion_protection = true
-
-
+  subnets            = 
   tags = {
-    Environment = "production"
+    Environment = "var.ALB_NAME"
   }
 }
 
