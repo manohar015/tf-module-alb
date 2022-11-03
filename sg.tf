@@ -1,4 +1,6 @@
 resource "aws_security_group" "alb_public" {
+  count       = var.INTERNAL ? 0 : 1 
+
   name        = "roboshop-public-alb-${var.ENV}"
   description = "roboshop-public-alb-${var.ENV}"
   vpc_id      = data.terraform_remote_state.vpc.outputs.VPC_ID
@@ -24,7 +26,9 @@ resource "aws_security_group" "alb_public" {
   }
 }
 
-resource "aws_security_group" "alb_private" {  
+resource "aws_security_group" "alb_private" {
+    
+      
   name        = "roboshop-private-alb-${var.ENV}"
   description = "roboshop-private-alb-${var.ENV}"
   vpc_id      = data.terraform_remote_state.vpc.outputs.VPC_ID
