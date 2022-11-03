@@ -17,3 +17,6 @@ resource "aws_lb" "alb" {
     Environment = "production"
   }
 }
+
+
+# local.deploy_b59webapp == true ? 1 : 0
