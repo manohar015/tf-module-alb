@@ -1,22 +1,14 @@
 resource "aws_security_group" "alb_public" {
-  name        = "roboshop-docdb-${var.ENV}"
-  description = "roboshop-docdb-${var.ENV}"
+  name        = "roboshop-public-alb-${var.ENV}"
+  description = "roboshop-public-alb-${var.ENV}"
   vpc_id      = data.terraform_remote_state.vpc.outputs.VPC_ID
 
   ingress {
-    description      = "Allow DocDB Connection From Default VPC"
-    from_port        = var.DOCDB_PORT
-    to_port          = var.DOCDB_PORT
+    description      = "Allows http from internet"
+    from_port        = 80
+    to_port          = 80
     protocol         = "tcp"
-    cidr_blocks      = [data.terraform_remote_state.vpc.outputs.DEFAULT_VPC_CIDR]
-  }
-
-  ingress {
-    description      = "Allow DocDB Connection From Private VPC"
-    from_port        = var.DOCDB_PORT
-    to_port          = var.DOCDB_PORT
-    protocol         = "tcp"
-    cidr_blocks      = [data.terraform_remote_state.vpc.outputs.VPC_CIDR]
+    cidr_blocks      = ["0.0.0.0/0"]
   }
 
   egress {
@@ -28,6 +20,6 @@ resource "aws_security_group" "alb_public" {
   }
 
   tags = {
-    Name = "roboshop-docdb-sg-${var.ENV}"
+    Name =  "roboshop-public-alb-${var.ENV}"
   }
 }
