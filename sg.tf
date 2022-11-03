@@ -25,16 +25,16 @@ resource "aws_security_group" "alb_public" {
 }
 
 resource "aws_security_group" "alb_private" {
-  name        = "roboshop-public-alb-${var.ENV}"
-  description = "roboshop-public-alb-${var.ENV}"
+  name        = "roboshop-private-alb-${var.ENV}"
+  description = "roboshop-private-alb-${var.ENV}"
   vpc_id      = data.terraform_remote_state.vpc.outputs.VPC_ID
 
   ingress {
-    description      = "Allows http from internet"
+    description      = "Allows http from Intranet Only"
     from_port        = 80
     to_port          = 80
     protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    cidr_blocks      = [data.terraform_remote_state.vpc.outputs.VPC_CIDR]
   }
 
   egress {
