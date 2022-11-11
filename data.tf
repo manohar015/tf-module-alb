@@ -6,3 +6,6 @@ data "terraform_remote_state" "vpc" {
     region = "us-east-1"
   }
 }
+
+
+data.terraform_remote_state.vpc.outputs.VPC_ID
